@@ -1,0 +1,28 @@
+import { useDispatch } from "react-redux"
+
+import { addItem } from "./redux/slice"
+
+const Product=()=>{
+
+    const dispatch= useDispatch()
+    return(
+        <div className="product-card">
+    <div className="product-image">
+      <img src="https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Computers%20Peripherals/Computer%20Accessories%20and%20Tablets%20Accessories/Images/311836_0_b5knzh.png" alt="Product Image" />
+    </div>
+
+    <div className="product-info">
+      <h1>Wireless Headphones</h1>
+      <p className="price">$129.99</p>
+      <p className="description">
+        Experience high-quality sound with these wireless headphones. 
+        Featuring noise cancellation, long-lasting battery life, 
+        and a sleek modern design for everyday use.
+      </p>
+      <button onClick={()=>dispatch(addItem(1))} className="btn">Add to Cart</button>
+    </div>
+  </div>
+    )
+}
+
+export default Product
