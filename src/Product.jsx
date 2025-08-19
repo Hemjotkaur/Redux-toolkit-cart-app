@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
 
-import { addItem } from "./redux/slice"
+import { addItem, removeItem } from "./redux/slice"
 
 const Product=()=>{
 
@@ -20,6 +20,8 @@ const Product=()=>{
         and a sleek modern design for everyday use.
       </p>
       <button onClick={()=>dispatch(addItem(1))} className="btn">Add to Cart</button>
+      <button onClick={()=>dispatch(removeItem(1))} className="btn remove-button">Remove From Cart</button>
+
     </div>
   </div>
     )

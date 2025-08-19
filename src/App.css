@@ -139,3 +139,12 @@
     .btn:hover {
       background: #1d3557;
     }
+
+    .remove-button{
+      background-color: #e63946;
+      margin-left: 10px;
+    }
+
+    .remove-button:hover{
+      background-color: #af2631;
+    }
