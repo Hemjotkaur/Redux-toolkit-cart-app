@@ -8,8 +8,6 @@ const dispatch=useDispatch();
   return (
     <>
  <Header />
-     <h1>React redux toolkit tutorials</h1>
-     <button onClick={()=>dispatch(clearAllItems())} className='btn'>Clear Cart</button>
  <Product />
     </>
   )

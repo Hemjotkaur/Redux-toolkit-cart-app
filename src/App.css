@@ -201,3 +201,11 @@
       color: #999;
     }
   
+
+    .btn-disable{
+      background-color: gainsboro;
+    }
+
+    .btn-disable:hover{
+      background-color: gainsboro;
+    }
