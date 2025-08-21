@@ -2,36 +2,36 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { addItem, removeItem } from "./redux/slice"
 import { useEffect } from "react"
-import {fetchProducts} from './redux/productSlice'
+import { fetchProducts } from './redux/productSlice'
 
-const Product=()=>{
-    const dispatch= useDispatch();
-    useEffect(()=>{
-      dispatch(fetchProducts())
-    },[])
-    const selector=useSelector((state)=>state.products.items)
-    console.log(selector);
-    
-    return(
-        <div className="product-card">
-    <div className="product-image">
-      <img src="https://media-ik.croma.com/prod/https://media.tatacroma.com/Croma%20Assets/Computers%20Peripherals/Computer%20Accessories%20and%20Tablets%20Accessories/Images/311836_0_b5knzh.png" alt="Product Image" />
+const Product = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchProducts())
+  }, [])
+  const productSelector = useSelector((state) => state.products.items)
+  console.log(productSelector);
+
+  return (
+    <div className="grid">
+      {
+        productSelector.length && productSelector.map((item)=>(
+          <div key={item.id} className="card">
+            <img src={item.thumbnail} />
+            <div className="content">
+              <div className="title">{item.title}</div>
+              <div className="brand">{item.brand}</div>
+              <div className="price">{item.price}</div>
+              <div className="rating">{item.rating}</div>
+              <button className="btn">Add To Cart</button>
+
+            </div>
+          </div>
+        ))
+      }
+
     </div>
-
-    <div className="product-info">
-      <h1>Wireless Headphones</h1>
-      <p className="price">$129.99</p>
-      <p className="description">
-        Experience high-quality sound with these wireless headphones. 
-        Featuring noise cancellation, long-lasting battery life, 
-        and a sleek modern design for everyday use.
-      </p>
-      <button onClick={()=>dispatch(addItem(1))} className="btn">Add to Cart</button>
-      <button onClick={()=>dispatch(removeItem(1))} className="btn remove-button">Remove From Cart</button>
-
-    </div>
-  </div>
-    )
+  )
 }
 
 export default Product
