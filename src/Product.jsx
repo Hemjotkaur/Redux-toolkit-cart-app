@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "./redux/productSlice";
+import { addItem } from "./redux/slice";
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -9,21 +10,31 @@ const Product = () => {
     dispatch(fetchProducts());
   }, []);
   const productSelector = useSelector((state) => state.products.items);
+
+  const cartSelector = useSelector((state) => state.cart.items);
   return (
     <div className="grid">
       {productSelector.length &&
-        productSelector.map((item) => 
-        <div key={item} className="card">
+        productSelector.map((item) => (
+          <div key={item} className="card">
             <img src={item.thumbnail} />
             <div className="title">{item.title}</div>
             <div className="brand">{item.brand}</div>
             <div className="price">{item.price}</div>
             <div className="rating">{item.rating}</div>
-            <button className="btn">Add To Cart</button>
-        </div>)}
+            {cartSelector.find((cartItem) => cartItem.id === item.id) ? (
+              <button  className="btn btn-disable">
+                Added in  Cart
+              </button>
+            ) : (
+              <button onClick={() => dispatch(addItem(item))} className="btn">
+                Add To Cart
+              </button>
+            )}
+          </div>
+        ))}
     </div>
   );
 };
 
 export default Product;
- 
