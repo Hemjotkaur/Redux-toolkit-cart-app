@@ -1,18 +1,20 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem, removeItem } from "./redux/slice";
 
 export default function CartList() {
   const cartSelector = useSelector((state) => state.cart.items);
 
-  const [cartItems,setCartItems] = useState(cartSelector)
-  const manageQuantity = (id,q) => {
-      let quantity = q > 1 ? q : 1
-      const cartTempItems = cartSelector.map((item) => {
-        return item.id == id ? {...item,quantity} : item
-      })
-      setCartItems(cartTempItems)
-    }
+  const [cartItems, setCartItems] = useState(cartSelector);
+  const manageQuantity = (id, q) => {
+    let quantity = q > 1 ? q : 1;
+    const cartTempItems = cartSelector.map((item) => {
+      return item.id == id ? { ...item, quantity } : item;
+    });
+    setCartItems(cartTempItems);
+  };
 
+  const dispatch = useDispatch();
   return (
     <div className="cart-container">
       <div className="cart-header">
@@ -32,16 +34,22 @@ export default function CartList() {
               <div className="item-actions">
                 <div style={{ display: "flex" }}>
                   <input
-                    onChange={(e)=>manageQuantity(item.id,e.target.value)}
+                    onChange={(e) => manageQuantity(item.id, e.target.value)}
                     style={{ margin: "15px" }}
-                    value={item.quantity?item.quantity:1}
+                    value={item.quantity ? item.quantity : 1}
                     type="number"
                     placeholder="enter quantity"
                   />
                   <div>
                     <span className="price">
-                      ${(item.quantity?item.price*item.quantity:item.price).toFixed(2)}</span>
-                    <button className="btn">Remove</button>
+                      $
+                      {(item.quantity
+                        ? item.price * item.quantity
+                        : item.price
+                      ).toFixed(2)}
+                    </span>
+                    <button onClick={() => dispatch(removeItem(item))} className="btn">Remove</button>
+                    <button onClick={() => dispatch(addItem(item))} className="btn">Remove</button>
                   </div>
                 </div>
               </div>
@@ -49,8 +57,16 @@ export default function CartList() {
           ))
         : null}
       <div className="cart-footer">
-        Total:
-        ${(cartItems.reduce((sum, item) =>item.quantity?  sum + item.price*item.quantity:sum+item.price, 0)).toFixed(2)}
+        Total: $
+        {cartItems
+          .reduce(
+            (sum, item) =>
+              item.quantity
+                ? sum + item.price * item.quantity
+                : sum + item.price,
+            0,
+          )
+          .toFixed(2)}
       </div>
     </div>
   );
